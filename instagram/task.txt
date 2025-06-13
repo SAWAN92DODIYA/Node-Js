@@ -1,0 +1,12 @@
+// user 
+
+get /users :- all user 
+
+get /users/1 :- get the user id = 1
+get /users/2 :- get the user id = 2
+
+post /users - create user 
+
+patch /users/1 :- Edit the user id = 1
+
+delete /users/1 :- Delete the user id = 1
