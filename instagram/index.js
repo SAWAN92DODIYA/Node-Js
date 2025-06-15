@@ -4,10 +4,11 @@ const fs = require("fs");
 const Port = 8000;
 const users = require("./MOCK_DATA.json")
 
-// routes 
 
+// Middleware - Plugin 
 app.use(express.urlencoded({extended: false}));
 
+// routes 
 app.get("/api/users",(req, res)=>{
   return res.json(users);
 });
@@ -48,11 +49,44 @@ app.post("/api/users",(req,res)=>{
 })
 
 app.patch("/api/users/:id",(req,res)=>{
+  const id = Number(req.params.id);
+  const index = users.findIndex((user) => user.id === id);
+  if(index === -1)
+  {
+    return res.status(404).json({ status: "error", message: "User not found" });
+  }
+  users[index] ={
+    ...users[index],
+    ...req.body
+  };
+
+  fs.writeFile("./MOCK_DATA.json",JSON.stringify(users),(err)=>
+  {
+    if(err)
+    {
+      return res.status(500).json({status:"error",message:"Failed to update user"});
+    }
+
+    return res.json({status:"success",data: users[index]});
+  })
   
 })
 
 app.delete("/api/users/:id",(req,res)=>{
+  const id = Number(req.params.id);
+  const index = users.findIndex((user)=> user.id === id);
+  if (index === -1) {
+    return res.status(404).json({ status: "error", message: "User not found" });
+  }
+  users.splice(index,1);
+  
+  fs.writeFile("./MOCK_DATA.json", JSON.stringify(users), (err) => {
+    if (err) {
+      return res.status(500).json({ status: "error", message: "File write failed" });
+    }
 
+    return res.json({ status: "success", message: `User with id ${id} deleted` });
+  });
 })
 
 
