@@ -54,3 +54,9 @@
 1750584994529:::1 GET: /api/users
 
 1750585031237:::1 GET: /api/users
+
+1752316646248:::1 POST: /api/users
+
+1752316750281:::1 POST: /api/users
+
+1752316767962:::1 GET: /api/users

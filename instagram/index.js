@@ -11,8 +11,7 @@ const app = express();
 // DB connection
 connectMongoDb("mongodb://127.0.0.1:27017/instagram").then(()=>{
   console.log("MongoDB Connected!")
-});
-
+});   
 
 // Middleware - Plugin 
 app.use(express.urlencoded({extended: false}));
